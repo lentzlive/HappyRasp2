@@ -40,7 +40,7 @@
         </Grid>
 
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <ProgressBar x:Name="progressBar" />
+            <ProgressBar  IsIndeterminate="True" x:Name="progressBar" />
             <TextBlock x:Name="txtText" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"  Text="Score" />
             <Button x:Name="CaptureButton" Content="Capture ID Photo" Grid.Column="1" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Click="Capture_Click" FontSize="32"/>
 
