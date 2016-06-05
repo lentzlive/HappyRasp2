@@ -113,7 +113,7 @@ namespace HappyRasp
             var reader = new DataReader(photoStream.GetInputStreamAt(0));
             var bytes = new byte[photoStream.Size];
             await reader.LoadAsync((uint)photoStream.Size);
-            reader.ReadBytes(bytes);
+            reader.ReadBytes(bytes); 
 
             var stream = new MemoryStream(bytes);
 
