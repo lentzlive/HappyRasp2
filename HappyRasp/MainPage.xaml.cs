@@ -99,8 +99,10 @@ namespace HappyRasp
         /// </summary>
         private async void Capture_Click(object sender, RoutedEventArgs e)
         {
+            progressBar.Visibility = Visibility.Visible;
+
             // Hide the capture photo button
-            CaptureButton.Visibility = Visibility.Collapsed;
+            //CaptureButton.Visibility = Visibility.Collapsed;
 
             // Capture current frame from webcam, store it in temporary storage and set the source of a BitmapImage to said photo
             currentIdPhotoFile = await webcam.CapturePhoto();
@@ -127,7 +129,7 @@ namespace HappyRasp
             WebcamFeed.Visibility = Visibility.Collapsed;
             DisabledFeedGrid.Visibility = Visibility.Collapsed;
 
-            UserNameGrid.Visibility = Visibility.Visible;
+            //UserNameGrid.Visibility = Visibility.Visible;
 
 
             string subscriptionKey = "3963f888b7374cbb8b78f492758bbb02";
@@ -137,6 +139,22 @@ namespace HappyRasp
             {
                 Emotion[] emotionResult;
                 emotionResult = await emotionServiceClient.RecognizeAsync(stream);
+
+                if (emotionResult != null)
+                {
+
+                    string score= "Felicità: " + emotionResult[0].Scores.Happiness.ToString("0.0000") + "\n";
+                    score+= "Paura: " + emotionResult[0].Scores.Fear.ToString("0.0000") + "\n";
+                    score += "Rabbia: " + emotionResult[0].Scores.Anger.ToString("0.0000") + "\n";
+                    score += "Disprezzo: " + emotionResult[0].Scores.Contempt.ToString("0.0000") + "\n";
+                    score += "Disgusto: " + emotionResult[0].Scores.Disgust.ToString("0.0000") + "\n";
+                    score += "Neutrale: " + emotionResult[0].Scores.Neutral.ToString("0.0000") + "\n";
+                    score += "Tristezza: " + emotionResult[0].Scores.Sadness.ToString("0.0000") + "\n";
+                    score += "Sorpresa: " + emotionResult[0].Scores.Surprise.ToString("0.0000") + "\n";
+                    
+
+                    txtText.Text = score;// "Happiness: " +emotionResult[0].Scores.Happiness.ToString()+"\n";
+                }
             }
             catch (Exception exception)
             {
@@ -146,6 +164,8 @@ namespace HappyRasp
 
             // Dispose photo stream
             photoStream.Dispose();
+            progressBar.Visibility = Visibility.Collapsed;
+
         }
 
 
