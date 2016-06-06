@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <CollectionViewSource x:Name="PairedDevices"/>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RequestedTheme="Dark">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
@@ -20,8 +22,8 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="6*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
 
@@ -48,6 +50,70 @@
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
 
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
+            <TextBlock x:Name="MyTitle" HorizontalAlignment="Left" Height="33" Margin="60,10,0,10" TextWrapping="Wrap" Text="Universal Windows Generic Bluetooth Serial Test App " VerticalAlignment="Top" Width="416" Foreground="#FFFB1818" FontSize="16" FontWeight="Bold"/>
+            <StackPanel Orientation="Vertical" BorderBrush="Azure">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="ID" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="Wrap" Text="Id: " VerticalAlignment="Top" Width="28"/>
+                    <TextBlock x:Name="TxtBlock_SelectedID" HorizontalAlignment="Left" Height="25" Margin="10" TextWrapping="Wrap" Text="Id" VerticalAlignment="Top" Width="956"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="BTName" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="Wrap" Text="Name: " VerticalAlignment="Top" Width="50"/>
+                    <TextBlock x:Name="textBlockBTName" HorizontalAlignment="Left" Height="35" Margin="10,10,0,10" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="1004" ToolTipService.ToolTip=""/>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
+                <ToggleSwitch IsEnabled="False" Header="Start Process" Margin="10" VerticalAlignment="Top" x:Name="StartProcess" x:Uid="tgsRecv" Toggled="StartProcess_Toggled"  />
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="buttonRefresh" Content="Refresh" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="True"/>
+                <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
+                <Button x:Name="buttonClearSendText" Content="Clear Send" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="True"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="buttonStartRecv" Content="Start Recv" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
+                <Button x:Name="buttonStopRecv" Content="Stop Recv" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
+                <Button x:Name="buttonStartProcess" Content="Start Process" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
+            </StackPanel>
+            <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource PairedDevices}}" Background="Gray" Margin="10" DoubleTapped="ConnectDevices_DoubleTapped" 
+                    Width="Auto"
+                    Height="Auto"
+                    >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Orientation="Horizontal">
+                <ToggleSwitch IsEnabled="True" Header="Light ON/OFF" Margin="10" VerticalAlignment="Top" x:Name="tgsLightOn" x:Uid="tgsLightOn" Toggled="tgsLightOn_Toggled"  />
+
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="SendText" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap"  Text="Send: " VerticalAlignment="Top" Width="50"/>
+                <TextBox x:Name="textBoxSendText" Text="Send Me" HorizontalAlignment="Left" Height="40" Margin="10" TextWrapping="Wrap"  VerticalAlignment="Top" Width="158" ToolTipService.ToolTip="" AcceptsReturn="True"/>
+                <Button x:Name="buttonSend" Content="Send" HorizontalAlignment="Left" Height="40" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click"  IsEnabled="False"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="RecvdText" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap" Text="Recvd: " VerticalAlignment="Top" Width="50"/>
+                <TextBlock x:Name="textBoxRecvdText" HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="800" Height="Auto" ToolTipService.ToolTip=""/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="PM25Text" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap" Text="Serial: " VerticalAlignment="Top" Width="50"/>
+                <TextBlock x:Name="textBoxPM25Text" HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="800" Height="Auto" ToolTipService.ToolTip=""/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="PM10Text" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap" Text="Value: " VerticalAlignment="Top" Width="50"/>
+                <TextBlock x:Name="textBoxPM10Text" HorizontalAlignment="Left" Margin="10" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="800" Height="Auto" ToolTipService.ToolTip=""/>
+            </StackPanel>
         </StackPanel>
         <Grid x:Name="UserNameGrid" Grid.Column="1" Grid.Row="1" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
