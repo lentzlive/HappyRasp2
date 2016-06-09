@@ -42,7 +42,7 @@
         </Grid>
 
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <ProgressBar  IsIndeterminate="True" x:Name="progressBar" />
+            <ProgressBar Visibility="Collapsed"  IsIndeterminate="True" x:Name="progressBar" />
             <TextBlock x:Name="txtText" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center"  Text="Score" />
             <Button x:Name="CaptureButton" Content="Capture ID Photo" Grid.Column="1" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Click="Capture_Click" FontSize="32"/>
 
@@ -54,33 +54,17 @@
 
 
         <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Vertical">
-            <TextBlock x:Name="MyTitle" HorizontalAlignment="Left" Height="33" Margin="60,10,0,10" TextWrapping="Wrap" Text="Universal Windows Generic Bluetooth Serial Test App " VerticalAlignment="Top" Width="416" Foreground="#FFFB1818" FontSize="16" FontWeight="Bold"/>
-            <StackPanel Orientation="Vertical" BorderBrush="Azure">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="ID" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="Wrap" Text="Id: " VerticalAlignment="Top" Width="28"/>
-                    <TextBlock x:Name="TxtBlock_SelectedID" HorizontalAlignment="Left" Height="25" Margin="10" TextWrapping="Wrap" Text="Id" VerticalAlignment="Top" Width="956"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="BTName" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="Wrap" Text="Name: " VerticalAlignment="Top" Width="50"/>
-                    <TextBlock x:Name="textBlockBTName" HorizontalAlignment="Left" Height="35" Margin="10,10,0,10" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="1004" ToolTipService.ToolTip=""/>
-                </StackPanel>
+            <TextBlock x:Name="MyTitle" HorizontalAlignment="Left" Height="33" Margin="5,10,0,10" TextWrapping="Wrap" Text="Bluetooth Serial connection" VerticalAlignment="Top" Width="200" Foreground="#FFFB1818" FontSize="14" FontWeight="Bold"/>
 
+                     <StackPanel Orientation="Horizontal">
+                <Button x:Name="buttonRefresh" Content="Refresh" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="True"/>
+                <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
-                <ToggleSwitch IsEnabled="False" Header="Start Process" Margin="10" VerticalAlignment="Top" x:Name="StartProcess" x:Uid="tgsRecv" Toggled="StartProcess_Toggled"  />
 
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="buttonRefresh" Content="Refresh" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="True"/>
-                <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
-                <Button x:Name="buttonClearSendText" Content="Clear Send" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="True"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="buttonStartRecv" Content="Start Recv" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
-                <Button x:Name="buttonStopRecv" Content="Stop Recv" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
-                <Button x:Name="buttonStartProcess" Content="Start Process" HorizontalAlignment="Left" Height="49" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click" IsEnabled="False"/>
-            </StackPanel>
+
             <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource PairedDevices}}" Background="Gray" Margin="10" DoubleTapped="ConnectDevices_DoubleTapped" 
                     Width="Auto"
                     Height="Auto"
@@ -91,15 +75,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel Orientation="Horizontal">
-                <ToggleSwitch IsEnabled="True" Header="Light ON/OFF" Margin="10" VerticalAlignment="Top" x:Name="tgsLightOn" x:Uid="tgsLightOn" Toggled="tgsLightOn_Toggled"  />
-
-
-            </StackPanel>
+        
+            
             <StackPanel Orientation="Horizontal">
                 <TextBlock x:Name="SendText" HorizontalAlignment="Left" Height="23" Margin="10" TextWrapping="NoWrap"  Text="Send: " VerticalAlignment="Top" Width="50"/>
                 <TextBox x:Name="textBoxSendText" Text="Send Me" HorizontalAlignment="Left" Height="40" Margin="10" TextWrapping="Wrap"  VerticalAlignment="Top" Width="158" ToolTipService.ToolTip="" AcceptsReturn="True"/>
-                <Button x:Name="buttonSend" Content="Send" HorizontalAlignment="Left" Height="40" Margin="10" VerticalAlignment="Top" Width="102" Click="button_Click"  IsEnabled="False"/>
 
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -122,8 +102,6 @@
                 <ColumnDefinition Width=".6*" />
             </Grid.ColumnDefinitions>
             <TextBox x:Name="UserNameBox" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="32" Margin="20,0" PlaceholderText="Photo ID Name (ex: John Doe)"/>
-            <Button x:Name="ConfirmButton" Content="Confirm" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" Click="ConfirmButton_Click"/>
-            <Button x:Name="CancelButton" Content="Cancel" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" Click="CancelButton_Click"/>
         </Grid>
     </Grid>
 </Page>

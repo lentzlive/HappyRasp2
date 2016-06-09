@@ -39,6 +39,8 @@ void loop()
   // Keep reading from HC-05 and send to Arduino Serial Monitor
   if(BTSerial.available())
   {
+	
+	// Read string from Raspberry
    delay(10);
    ch1 = BTSerial.read();
    delay(10);
@@ -66,37 +68,15 @@ void loop()
    Serial.print(ch2);
    Serial.print(ch3);
 
-
-String stringOne =  String(ch1+ch2+ch3); 
-Serial.println(stringOne); 
+/*
+	String stringOne =  String(ch1+ch2+ch3); 
+	Serial.println(stringOne); 
  
-BTSerial.write(ch1);
-BTSerial.write(ch2);
-BTSerial.write(ch3);
-   
+	BTSerial.write(ch1);
+	BTSerial.write(ch2);
+	BTSerial.write(ch3);   
+*/
     
-/*        Serial.print(BTSerial.read());  
-         Serial.print(BTSerial.read());  
-          Serial.print(BTSerial.read());  
-           Serial.print(BTSerial.read());  
-            Serial.print(BTSerial.read());  
-             Serial.print(BTSerial.read());  
-              Serial.print(BTSerial.read());  
-               Serial.print(BTSerial.read());  
-    if(ch=='a')    
-    BTSerial.write("Hello World");
-    else
-    BTSerial.write("Hello World2");
-   // BTSerial.write("Hello World");
-while(true)
-{
-  delay(500);  
-   BTSerial.write("Hello World");
-   delay(500);  
-    BTSerial.write("Hello World2");
-       delay(500);  
-    BTSerial.write("AAANN nnnn");
-}*/
 
   }
 
