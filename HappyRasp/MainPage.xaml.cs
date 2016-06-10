@@ -173,10 +173,7 @@ namespace HappyRasp
                     this.StartStopReceive.IsEnabled = true;
 
                     string msg = String.Format("Connected to {0}!", _socket.Information.RemoteAddress.DisplayName);
-                    //MessageDialog md = new MessageDialog(msg, Title);
-                    System.Diagnostics.Debug.WriteLine(msg);
-                    //await md.ShowAsync();
-                }
+                        }
             }
             catch (Exception ex)
             {
@@ -206,18 +203,12 @@ namespace HappyRasp
                         await this._socket.CancelIOAsync();
                         _socket.Dispose();
                         _socket = null;
-                    
                         this.buttonDisconnect.IsEnabled = false;
                         this.StartStopReceive.IsEnabled = false;
-
                         break;
-             
-              
-
                     case "Refresh":
                         InitializeRfcommDeviceService();
                         break;
-
                 }
             }
         }
@@ -237,7 +228,7 @@ namespace HappyRasp
                 }
                 else
                 {
-                    //status.Text = "Select a device and connect";
+
                 }
 
             }
@@ -293,25 +284,6 @@ namespace HappyRasp
         }
 
 
-
-
-        /// <summary>
-        /// CancelReadTask:
-        /// - Uses the ReadCancellationTokenSource to cancel read operations
-        /// </summary>
-        private void CancelReadTask()
-        {
-            if (ReadCancellationTokenSource != null)
-            {
-                if (!ReadCancellationTokenSource.IsCancellationRequested)
-                {
-                    ReadCancellationTokenSource.Cancel();
-                    recvdtxt = "";
-                }
-            }
-        }
-
-
         private void StartStopReceive_Toggled(object sender, RoutedEventArgs e)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
@@ -325,7 +297,7 @@ namespace HappyRasp
                 else
                 {
                     timer.Stop();
-                    CancelReadTask();
+
                 }
             }
         }
@@ -402,23 +374,14 @@ namespace HappyRasp
         private async void Capture_Click(object sender, RoutedEventArgs e)
         {
             PerformClickActionCaptureImage();
-
         }
 
-
-        private async void dataProcessTick(ThreadPoolTimer timer)
-        {
-            PerformClickActionCaptureImage();
-        }
 
 
         public async void PerformClickActionCaptureImage()
         {
 
             progressBar.Visibility = Visibility.Visible;
-
-            // Hide the capture photo button
-            //CaptureButton.Visibility = Visibility.Collapsed;
 
             // Capture current frame from webcam, store it in temporary storage and set the source of a BitmapImage to said photo
             currentIdPhotoFile = await webcam.CapturePhoto();
@@ -427,7 +390,7 @@ namespace HappyRasp
             await idPhotoImage.SetSourceAsync(photoStream);
 
 
-            #region Prima converto in Byte[] e poi in stream
+            #region Before Convert in Byte[] and then in stream
             var reader = new DataReader(photoStream.GetInputStreamAt(0));
             var bytes = new byte[photoStream.Size];
             await reader.LoadAsync((uint)photoStream.Size);
@@ -445,8 +408,6 @@ namespace HappyRasp
             WebcamFeed.Visibility = Visibility.Collapsed;
             DisabledFeedGrid.Visibility = Visibility.Collapsed;
 
-            //UserNameGrid.Visibility = Visibility.Visible;
-
 
             string subscriptionKey = "3963f888b7374cbb8b78f492758bbb02";
             EmotionServiceClient emotionServiceClient = new EmotionServiceClient(subscriptionKey);
@@ -459,14 +420,14 @@ namespace HappyRasp
                 if (emotionResult != null)
                 {
 
-                    string score = "Felicità: " + emotionResult[0].Scores.Happiness.ToString("0.0000") + "\n";
-                    score += "Paura: " + emotionResult[0].Scores.Fear.ToString("0.0000") + "\n";
-                    score += "Rabbia: " + emotionResult[0].Scores.Anger.ToString("0.0000") + "\n";
-                    score += "Disprezzo: " + emotionResult[0].Scores.Contempt.ToString("0.0000") + "\n";
-                    score += "Disgusto: " + emotionResult[0].Scores.Disgust.ToString("0.0000") + "\n";
-                    score += "Neutrale: " + emotionResult[0].Scores.Neutral.ToString("0.0000") + "\n";
-                    score += "Tristezza: " + emotionResult[0].Scores.Sadness.ToString("0.0000") + "\n";
-                    score += "Sorpresa: " + emotionResult[0].Scores.Surprise.ToString("0.0000") + "\n";
+                    string score = "Happiness: " + emotionResult[0].Scores.Happiness.ToString("0.0000") + "\n";
+                    score += "Fear: " + emotionResult[0].Scores.Fear.ToString("0.0000") + "\n";
+                    score += "Anger: " + emotionResult[0].Scores.Anger.ToString("0.0000") + "\n";
+                    score += "Contempt: " + emotionResult[0].Scores.Contempt.ToString("0.0000") + "\n";
+                    score += "Disgust: " + emotionResult[0].Scores.Disgust.ToString("0.0000") + "\n";
+                    score += "Neutral: " + emotionResult[0].Scores.Neutral.ToString("0.0000") + "\n";
+                    score += "Sadness: " + emotionResult[0].Scores.Sadness.ToString("0.0000") + "\n";
+                    score += "Surprise: " + emotionResult[0].Scores.Surprise.ToString("0.0000") + "\n";
 
 
                     txtText.Text = score;// "Happiness: " +emotionResult[0].Scores.Happiness.ToString()+"\n";
@@ -481,67 +442,19 @@ namespace HappyRasp
                     {
                         Send("101");
                     }
-
                     else
                         Send("001");
                 }
             }
             catch (Exception exception)
             {
-                //window.Log(exception.ToString());
-                //return null;
+
             }
 
             // Dispose photo stream
             photoStream.Dispose();
             progressBar.Visibility = Visibility.Collapsed;
         }
-
-        /// <summary>
-        /// Uploads the image to Project Oxford and detect emotions.
-        /// </summary>
-        /// <param name="imageFilePath">The image file path.</param>
-        /// <returns></returns>
-        private async Task<Emotion[]> UploadAndDetectEmotions(string imageFilePath)
-        {
-
-            string subscriptionKey = "3963f888b7374cbb8b78f492758bbb02";
-
-            //window.Log("EmotionServiceClient is created");
-
-            // -----------------------------------------------------------------------
-            // KEY SAMPLE CODE STARTS HERE
-            // -----------------------------------------------------------------------
-
-            //
-            // Create Project Oxford Emotion API Service client
-            //
-            EmotionServiceClient emotionServiceClient = new EmotionServiceClient(subscriptionKey);
-
-            //window.Log("Calling EmotionServiceClient.RecognizeAsync()...");
-            try
-            {
-                Emotion[] emotionResult;
-                using (Stream imageFileStream = File.OpenRead(imageFilePath))
-                {
-                    //
-                    // Detect the emotions in the URL
-                    //
-                    emotionResult = await emotionServiceClient.RecognizeAsync(imageFileStream);
-                    return emotionResult;
-                }
-            }
-            catch (Exception exception)
-            {
-                //window.Log(exception.ToString());
-                return null;
-            }
-            // -----------------------------------------------------------------------
-            // KEY SAMPLE CODE ENDS HERE
-            // -----------------------------------------------------------------------
-
-        }
-
 
     }
 }
