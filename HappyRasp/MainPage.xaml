@@ -77,8 +77,12 @@
                 <ToggleSwitch IsEnabled="False" Header="Start/Stop Receive" Margin="10" VerticalAlignment="Top" x:Name="StartStopReceive" x:Uid="tgsRecv" Toggled="StartStopReceive_Toggled"  />
 
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                <TextBox x:Name="txtSendData" />
+                <Button x:Name="btnSendData" Width="60" Height="20" Content="Send" Click="btnSendData_Click"  />
+            </StackPanel>
 
-               </StackPanel>
+            </StackPanel>
         <Grid x:Name="UserNameGrid" Grid.Column="1" Grid.Row="1" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />

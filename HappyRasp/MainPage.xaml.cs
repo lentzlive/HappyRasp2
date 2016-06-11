@@ -433,17 +433,17 @@ namespace HappyRasp
                     txtText.Text = score;// "Happiness: " +emotionResult[0].Scores.Happiness.ToString()+"\n";
 
                     if (emotionResult[0].Scores.Happiness >= 0.85)
-                        Send("000");
+                        Send("111");
                     else if (emotionResult[0].Scores.Happiness >= 0.50 && emotionResult[0].Scores.Happiness < 0.85)
                     {
-                        Send("110");
+                        Send("001");
                     }
                     else if (emotionResult[0].Scores.Happiness > 0.25 && emotionResult[0].Scores.Happiness < 0.50)
                     {
-                        Send("101");
+                        Send("100");
                     }
                     else
-                        Send("001");
+                        Send("110");
                 }
             }
             catch (Exception exception)
@@ -456,5 +456,9 @@ namespace HappyRasp
             progressBar.Visibility = Visibility.Collapsed;
         }
 
+        private void btnSendData_Click(object sender, RoutedEventArgs e)
+        {
+            Send(this.txtSendData.Text);
+        }
     }
 }
