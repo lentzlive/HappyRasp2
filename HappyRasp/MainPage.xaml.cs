@@ -409,7 +409,7 @@ namespace HappyRasp
             DisabledFeedGrid.Visibility = Visibility.Collapsed;
 
 
-            string subscriptionKey = "3963f888b7374cbb8b78f492758bbb02";
+            string subscriptionKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
             EmotionServiceClient emotionServiceClient = new EmotionServiceClient(subscriptionKey);
 
             try
